@@ -44,15 +44,14 @@ void test_thread_queue(){
         }
     };
 
-    auto consumer2 = [&]() {
-        while (1) {
-            auto value = 0;
-            auto res = safe_que.try_pop(value);
-            std::printf("[2]  -------   %d\n", res ? value : -1);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-    };
-
+    // auto consumer2 = [&]() {
+    //     while (1) {
+    //         auto value = 0;
+    //         auto res = safe_que.try_pop(value);
+    //         std::printf("[2]  -------   %d\n", res ? value : -1);
+    //         std::this_thread::sleep_for(std::chrono::seconds(1));
+    //     }
+    // };
     std::thread t1(producer);
     std::thread t2(consumer1);
     t1.join();
