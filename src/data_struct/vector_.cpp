@@ -10,9 +10,10 @@ class Vector
         }
 
         Vector(size_t n){
-            this->size = n;
+            this->size_ = n;
             this->begin = static_cast<value_type*>(malloc(n*sizeof(value_type)));
             this->end = this->begin + n*sizeof(value_type);
+            this->cur = this->end;
         }
 
         ~Vector(){
@@ -24,6 +25,14 @@ class Vector
 
         bool empty(){
             return begin==end;
+        }
+
+        size_t size(){
+            return static_cast<size_t>((cur-begin)/sizeof(value_type));
+        }
+
+        size_t capacity(){
+            return this->size_;
         }
 
         value_type front(){
@@ -45,28 +54,29 @@ class Vector
             this->end = nullptr;
         }
 
-        // void resize(){
-
-        // }    
         void push_back(const value_type &value){
             if(begin==nullptr){
-                this->size = 1;
+                this->size_ = 1;
                 this->begin = static_cast<value_type*>(malloc(sizeof(value_type)));
                 this->end = this->begin + sizeof(value_type);
                 this->cur = this->begin;
             }
             if(cur==end){
-                this->begin = static_cast<value_type*>(realloc(this->begin,2*this->size*sizeof(value_type)));
-                this->end = this->begin + 2*this->size*sizeof(value_type);
+                this->begin = static_cast<value_type*>(realloc(this->begin,2*this->size_*sizeof(value_type)));
+                this->end = this->begin + 2*this->size_*sizeof(value_type);
+                this->size_ = 2*this->size_;
             }
             *cur = value;
             cur += sizeof(value_type);
         }
 
-        // void pop_back(){
+        // value_type pop_back(){
 
         // }
 
+        // void resize(){
+
+        // }    
 
         // void erase(size_t index){
 
@@ -76,7 +86,7 @@ class Vector
     
         // }
     private:
-        size_t size = 0;
+        size_t size_ = 0;
         value_type *begin = nullptr;
         value_type *cur = nullptr; //the last one element which has the value
         value_type *end = nullptr ; // the last one which can fill in value

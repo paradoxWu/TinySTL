@@ -31,43 +31,68 @@ void test_heapsort()
 }
 
 void test_thread_queue(){
+    std::cout<<"===============";
+    std::cout << __FUNCTION__ << "==============="<< std::endl;
+    std::cout<<"========Test 1========="<<std::endl;
     Queue<int> safe_que;
+    {
+        auto producer = [&]() {    
+            for (int i = 0; i < 100; ++i) {
+                safe_que.push(i);
+                std::printf("[push]  -------   %d\n",i);
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+            }
+        };
 
-    auto producer = [&]() {    
-        for (int i = 0; i < 100; ++i) {
-            safe_que.push(i);
-            std::printf("[push]  -------   %d\n",i);
-            std::this_thread::sleep_for(std::chrono::seconds(3));
-        }
-    };
+        auto consumer1 = [&]() {
+            while (1) {
+                std::printf("[1]  -------   %d\n", safe_que.pop());
+            }
+        };
+        std::thread t1(producer);
+        std::thread t2(consumer1);
+        t1.join();
+        t2.join();
+    }
 
-    auto consumer1 = [&]() {
-        while (1) {
-            std::printf("[1]  -------   %d\n", safe_que.pop());
-        }
-    };
+    std::cout<<"========Test 2========="<<std::endl;
 
-    auto consumer2 = [&]() {
-        while (1) {
-            auto value = 0;
-            auto res = safe_que.try_pop(value);
-            std::printf("[2]  -------   %d\n", res ? value : -1);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-    };
-    std::thread t1(producer);
-    std::thread t2(consumer2);
-    t1.join();
-    t2.join();
+    {
+        auto producer = [&]() {    
+            for (int i = 0; i < 100; ++i) {
+                safe_que.push(i);
+                std::printf("[push]  -------   %d\n",i);
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+            }
+        };
+        auto consumer2 = [&]() {
+            while (1) {
+                auto value = 0;
+                auto res = safe_que.try_pop(value);
+                std::printf("[2]  -------   %d\n", res ? value : -1);
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+            }
+        };
+
+        std::thread t1(producer);
+        std::thread t2(consumer2);
+        t1.join();
+        t2.join();
+    }
+    std::cout<<"================="<<std::endl;
+    std::cout<<"end"<<std::endl;
 }
 
 void test_vector(){
-    std::cout<<__FUNCTION__<<std::endl;
-    std::cout<<"================="<<std::endl;
+    std::cout<<"===============";
+    std::cout << __FUNCTION__ << "==============="<< std::endl;
+    std::cout<<"========Test 1========="<<std::endl;
     {
 
         Vector<int> vec2(10);
         std::cout<<"vec is empty? "<<vec2.empty()<<std::endl;
+        std::cout<<"vec size: "<<vec2.size()<<std::endl;
+        std::cout<<"vec capacity: "<<vec2.capacity()<<std::endl;
         for(int i =0;i<10;i++){
             vec2[i] = i;
         }
@@ -76,18 +101,32 @@ void test_vector(){
         }
         std::cout<<std::endl;
         std::cout<<"vec is empty? "<<vec2.empty()<<std::endl;
+        std::cout<<"vec size: "<<vec2.size()<<std::endl;
+        std::cout<<"vec capacity: "<<vec2.capacity()<<std::endl;
         vec2.clear();
         std::cout<<"vec is empty? "<<vec2.empty()<<std::endl;
+        std::cout<<"vec size: "<<vec2.size()<<std::endl;
+        std::cout<<"vec capacity: "<<vec2.capacity()<<std::endl;
     }
-
+    std::cout<<"========Test 2========="<<std::endl;  
     {
         Vector<int> vec;
         std::cout<<"vec is empty? "<<vec.empty()<<std::endl;
+        std::cout<<"vec size: "<<vec.size()<<std::endl;
+        std::cout<<"vec capacity: "<<vec.capacity()<<std::endl;
         vec.push_back(1);
         vec.push_back(2);
         std::cout<<vec[0]<<" "<<vec[1]<<std::endl;
+        std::cout<<vec.front()<<" "<<vec.back()<<std::endl;
         std::cout<<"vec is empty? "<<vec.empty()<<std::endl;
-
+        std::cout<<"vec size: "<<vec.size()<<std::endl;
+        std::cout<<"vec capacity: "<<vec.capacity()<<std::endl;
+        vec[1] = 100;
+        std::cout<<vec[0]<<" "<<vec[1]<<std::endl;
+        vec.clear();
+        std::cout<<"vec is empty? "<<vec.empty()<<std::endl;
+        std::cout<<"vec size: "<<vec.size()<<std::endl;
+        std::cout<<"vec capacity: "<<vec.capacity()<<std::endl;
     }
     std::cout<<"================="<<std::endl;
     std::cout<<"end"<<std::endl;
