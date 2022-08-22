@@ -4,6 +4,7 @@
 #include "../include/sort.h"
 #include "../../src/data_struct/queue_thread.cpp"
 #include "../../src/data_struct/vector_.cpp"
+#include "../../src/data_struct/my_string.cpp"
 
 
 void test_heapsort()
@@ -132,9 +133,38 @@ void test_vector(){
     std::cout<<"end"<<std::endl;
 }
 
+void test_string(){
+  MyString a;
+  std::cout << "a is " << a << std::endl;
+  string input = "test1";
+  MyString b(input.data());
+  std::cout << "b is " << b << std::endl;
+
+  a = b;
+  std::cout << "a is " << a << std::endl;
+  const char* mystr = a.c_str();
+  std::cout << "mystr is " << mystr << std::endl;
+
+  // MyString c = std::move(b);
+  // std::cout << "c is "<< c << std::endl;
+  // std::cout << "b is " << b << std::endl;
+
+  // c++;
+  // std::cout << "c is " << c << std::endl; //
+
+/*
+a is 
+b is test1
+mystr is test
+c is test1
+b is
+c is uftu2
+*/
+}
+
 int main()
 {
     std::cout<<"Hello TinySTL!"<<std::endl;
-    test_vector();
+    test_string();
     return 0;
 }

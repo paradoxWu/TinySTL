@@ -3,7 +3,7 @@
 // #include "../../include/sort.h"
 
 template<class T>
-void reverse(T &b,int len)
+void reverse(T &b,size_t len)
 {
     // size_t len = sizeof(b)/sizeof(b[0]);
     for(size_t i =0;i<len/2;i++)
