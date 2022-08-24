@@ -7,7 +7,7 @@ else
 fi
 cd build
 echo "Begin compiling"
-cmake .. -DCMAKE_INSTALL_PREFIX=../
-make
+cmake ..  -DCMAKE_INSTALL_PREFIX=../
+make -j16
 make install
 cd ..

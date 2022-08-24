@@ -12,6 +12,12 @@
 
 mac上的动态库是以 `.dylib`结尾，linux上的动态库以 `so`结尾
 
+### window
+
+window 暂时还不熟悉这个平台，可以使用mingw去编译
+
+或者安装WSL，切换到linux环境下，就非常简单了
+
 ### linux
 
 linux上只需要
