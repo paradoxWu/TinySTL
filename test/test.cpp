@@ -1,10 +1,12 @@
 #include <iostream>
 #include <thread>
 #include <memory>
+#include <vector>
 #include "../include/sort.h"
+#include "../include/my_string.h"
 #include "../../src/data_struct/queue_thread.cpp"
 #include "../../src/data_struct/vector_.cpp"
-#include "../../src/data_struct/my_string.cpp"
+#include "../../src/utility/allocator.cpp"
 
 void test_heapsort()
 {
@@ -161,9 +163,21 @@ void test_string()
         */
 }
 
+void test_allocator()
+{
+        int ia[5] = { 0, 1, 2, 3, 4 };
+        std::vector<int, WYH::allocator<int>> iv(ia, ia + 5);
+        for (size_t i = 0; i < iv.size(); i++) {
+                std::cout << iv[i] << " ";
+        }
+        std::cout << std::endl;
+        WYH::allocator<int> all_;
+        std::cout << "max_size of the allocator:" << all_.max_size() << std::endl;
+}
+
 int main()
 {
         std::cout << "Hello TinySTL!" << std::endl;
-        test_string();
+        test_allocator();
         return 0;
 }

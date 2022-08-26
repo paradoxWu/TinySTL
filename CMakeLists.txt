@@ -42,6 +42,7 @@ MACRO(SUB_DIR_LIST result curdir)
     SET(${result} ${dirlist})
 ENDMACRO()
 
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 SUB_DIR_LIST(modules ${CMAKE_CURRENT_SOURCE_DIR}/src)
 FOREACH (module ${modules})
     message(${module})
