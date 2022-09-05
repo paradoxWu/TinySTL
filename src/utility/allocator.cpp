@@ -32,7 +32,7 @@ template <class T1, class T2> inline void _construct(T1 *ptr, const T2 &value)
         new (ptr) T1(value);
 }
 
-template <class T> inline void _destory(T *ptr)
+template <class T> inline void _destroy(T *ptr)
 {
         ptr->~T();
 }
@@ -64,9 +64,9 @@ public:
         {
                 _construct(p, value);
         }
-        void destory(pointer p)
+        void destroy(pointer p)
         {
-                _destory(p);
+                _destroy(p);
         }
 
         pointer address(reference x)
