@@ -67,7 +67,7 @@ SharedPtr<T>::SharedPtr(SharedPtr &&p)
 template<typename T>
 SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr &p)
 {
-    (this->ptr_ = p.ptr_){
+    if(this->ptr_ = p.ptr_){
         return *this;
     }
 
@@ -94,7 +94,7 @@ T& SharedPtr<T>::operator*()
 template<typename T>
 T* SharedPtr<T>::operator->()
 {
-    return ptr;
+    return this->ptr_;
 }
 
 template<typename T>

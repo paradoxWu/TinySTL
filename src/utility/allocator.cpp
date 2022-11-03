@@ -9,7 +9,8 @@ using namespace std;
 namespace WYH
 {
 
-template <class T> inline T *_allocate(ptrdiff_t size, T *)
+template <class T> 
+inline T *_allocate(ptrdiff_t size, T *)
 {
         // make sure it will throw an exception when allocing mermory fails.
         set_new_handler(nullptr);
@@ -22,29 +23,33 @@ template <class T> inline T *_allocate(ptrdiff_t size, T *)
         return tmp;
 }
 
-template <class T> inline void _deallocate(T *buffer)
+template <class T> 
+inline void _deallocate(T *buffer)
 {
         ::operator delete(buffer);
 }
 
-template <class T1, class T2> inline void _construct(T1 *ptr, const T2 &value)
+template <class T1, class T2> 
+inline void _construct(T1 *ptr, const T2 &value)
 {
         new (ptr) T1(value);
 }
 
-template <class T> inline void _destroy(T *ptr)
+template <class T> 
+inline void _destroy(T *ptr)
 {
         ptr->~T();
 }
 
-template <class T> class allocator
+template <class T> 
+class allocator
 {
 public:
         typedef T value_type;
-        typedef T *pointer;
-        typedef const T *const_pointer;
-        typedef T &reference;
-        typedef const T &const_reference;
+        typedef T* pointer;
+        typedef const T* const_pointer;
+        typedef T& reference;
+        typedef const T& const_reference;
 
         template <class U> struct rebind {
                 typedef allocator<U> other;
